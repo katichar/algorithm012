@@ -1,0 +1,20 @@
+双指针 O(1) 时间复杂度
+
+
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 1) return nums[0];
+        int preFirst=0,maxFirst=0,preLast=0,maxLast = 0;
+        for(int i = 0,j=n-1; i < n - 1; ++i,--j){
+            int temp = maxFirst;
+            maxFirst = Math.max(nums[i]+preFirst,maxFirst);
+            preFirst = temp;
+
+            temp = maxLast;
+            maxLast = Math.max(nums[j]+preLast,maxLast);
+            preLast = temp;
+        }
+        return Math.max(maxFirst,maxLast);
+    }
+}
