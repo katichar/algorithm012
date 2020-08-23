@@ -1,0 +1,60 @@
+
+
+class Solution {
+    private int[] parent;
+    private int count = 0;
+    public int findCircleNum(int[][] M) {
+        parent = new int[M.length];
+        count = M.length;
+        for(int i = 0; i < M.length; ++i){
+            parent[i] = i;
+        }
+        for(int i = 0; i < M.length; ++i){
+            for(int j = 0; j < M.length; ++j){
+                if(M[i][j] == 1 && i!=j){
+                    union(i,j);
+                }
+            }
+        }
+        return count;
+    }
+    public int find(int i){
+        while(i != parent[i]){
+            parent[i]=parent[parent[i]];
+            i = parent[i];
+        }
+        return i;
+    }
+    public void union(int i,int j){
+        int _i = find(i);
+        int _j = find(j);
+        if(_i == _j) return;
+        parent[_i] = _j;
+        count--;
+    }
+}
+
+dfs
+
+class Solution {
+    public int findCircleNum(int[][] M) {
+        // System.out.println(M.length);
+        int ret = 0;
+        boolean[] visited = new boolean[M.length];
+        for(int i = 0; i < M.length; ++i){
+            if(!visited[i]){
+                dfs(M,visited,i);
+                ret++;
+            }
+        }
+        return ret;
+    }
+    public void dfs(int[][] m, boolean[] visited, int i){
+        for(int j = 0; j < m.length; ++j){
+            if(m[i][j] == 1 && !visited[j]){
+                visited[j]=true;
+                dfs(m,visited,j);
+            }
+        }
+    }
+}
